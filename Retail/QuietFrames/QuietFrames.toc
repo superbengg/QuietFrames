@@ -2,7 +2,8 @@
 ## Title: QuietFrames
 ## Notes: Automatically manages only the foreground FPS cap.
 ## Author: QuietFrames
-## Version: 1.2.0
+## Version: 1.2.1
 ## SavedVariables: QuietFramesDB
 
 QuietFrames.lua
+

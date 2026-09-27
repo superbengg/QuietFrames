@@ -22,7 +22,7 @@ Both versions have been tried in-game by the author, including the settings menu
 | Quiet mode | 100 |
 | Full mode | 141 |
 
-Auto priority is **AFK > Fishing > Location**. Battlegrounds, arenas, and scenarios use the normal cap. Leaving AFK or ending fishing restores the appropriate location cap.
+Auto priority is **AFK > Fishing > Location**. Retail scenarios, including Delves, use the dungeon/raid cap (141 FPS by default). Battlegrounds and arenas use the normal cap. Forever scenarios continue to use the normal cap. Leaving AFK or ending fishing restores the appropriate location cap.
 
 Quiet and Full force their configured cap regardless of activity, including AFK, until Auto is selected again. AFK follows WoW's AFK flag (including `/afk`), not a separate inactivity timer.
 
@@ -76,3 +76,4 @@ Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wi
 ## Reporting problems
 
 Open an issue with your client/version, current mode, `/qf status` output, expected behavior, and any Lua error. Please omit personal account information.
+

@@ -31,7 +31,7 @@ local function Detect()
     local afk = UnitIsAFK("player")
     if not issecretvalue(afk) and afk then return "afk", "AFK / " .. location end
     if HasFishingBuff() then return "fishing", "Fishing for Attention / " .. location end
-    if instanceType == "party" or instanceType == "raid" then
+    if instanceType == "party" or instanceType == "raid" or instanceType == "scenario" then
         return "instance", location
     end
     return "normal", location
@@ -92,7 +92,7 @@ local function CreateSettings()
         { "afk", "Auto: AFK" },
         { "fishing", "Auto: Fishing for Attention" },
         { "normal", "Auto: Normal / open world" },
-        { "instance", "Auto: Dungeon / raid" },
+        { "instance", "Auto: Dungeon / raid / scenario" },
         { "quiet", "Quiet mode" },
         { "full", "Full mode" },
     }
@@ -231,3 +231,4 @@ events:RegisterUnitEvent("UNIT_AURA", "player") -- Buff gained, refreshed, or re
 events:RegisterEvent("PLAYER_REGEN_ENABLED") -- Recheck after combat aura restrictions end.
 
 events:RegisterEvent("PLAYER_FLAGS_CHANGED") -- Entering or leaving AFK.
+
