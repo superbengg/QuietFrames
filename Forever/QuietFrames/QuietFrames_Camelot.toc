@@ -1,0 +1,8 @@
+## Interface: 16001
+## Title: QuietFrames - Forever
+## Notes: Automatically manages only the foreground FPS cap.
+## Author: QuietFrames
+## Version: 1.2.0-Forever
+## SavedVariables: QuietFramesDB
+
+QuietFrames.lua

@@ -1,0 +1,8 @@
+## Interface: 120100
+## Title: QuietFrames
+## Notes: Automatically manages only the foreground FPS cap.
+## Author: QuietFrames
+## Version: 1.2.0
+## SavedVariables: QuietFramesDB
+
+QuietFrames.lua
