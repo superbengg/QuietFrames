@@ -63,7 +63,6 @@ local function Apply()
         C_CVar.SetCVar("maxFPS", tostring(target))
     end
     if button then
-        button.label:SetText(({ auto = "A", quiet = "Q", full = "F" })[db.mode])
         if GameTooltip:IsOwned(button) then ShowTooltip() end
     end
 end
@@ -163,10 +162,9 @@ local function CreateButton()
     button:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
     button:SetFrameStrata("MEDIUM")
     button:SetFrameLevel(Minimap:GetFrameLevel() + 8)
-    button:SetNormalTexture("Interface\\Buttons\\UI-Quickslot2")
+    button:SetNormalTexture("Interface\\AddOns\\QuietFrames\\Media\\QuietFrames.tga")
+    button:GetNormalTexture():SetTexCoord(0, 1, 0, 1)
     button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-    button.label = button:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    button.label:SetPoint("CENTER")
     button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     button:SetScript("OnClick", function(_, mouseButton)
         if mouseButton == "RightButton" then
