@@ -17,10 +17,10 @@ Both versions have been tried in-game by the author, including the settings menu
 | --- | ---: |
 | Auto: AFK | 30 |
 | Auto: Fishing | 60 |
-| Auto: Normal / open world | 100 |
-| Auto: Dungeon / raid | 141 |
-| Quiet mode | 100 |
-| Full mode | 141 |
+| Auto: Open World | 100 |
+| Auto: Dungeons & Raids | 141 |
+| Quiet Mode | 100 |
+| Full Mode | 141 |
 
 Auto priority is **AFK > Fishing > Location**. Retail scenarios, including Delves, use the dungeon/raid cap (141 FPS by default). Battlegrounds and arenas use the normal cap. Forever scenarios continue to use the normal cap. Leaving AFK or ending fishing restores the appropriate location cap.
 
@@ -32,7 +32,7 @@ Quiet and Full force their configured cap regardless of activity, including AFK,
 2. Choose exactly one version:
    - Retail: copy `Retail/QuietFrames` into `World of Warcraft/_retail_/Interface/AddOns/`.
    - Forever beta: copy `Forever/QuietFrames` into `World of Warcraft/_classic_beta_/Interface/AddOns/`.
-3. The installed folder must be named `QuietFrames`, with `QuietFrames.toc` and `QuietFrames.lua` directly inside it.
+3. The installed folder must be named `QuietFrames`, with `QuietFrames.toc`, `QuietFrames.lua`, and the `Media` folder directly inside it.
 4. Restart the client and enable **QuietFrames** (or **QuietFrames - Forever**) in the AddOns list.
 
 Do not copy the entire repository into AddOns. For later updates to an existing installation, replace the version's files and run `/reload`.
@@ -76,4 +76,3 @@ Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wi
 ## Reporting problems
 
 Open an issue with your client/version, current mode, `/qf status` output, expected behavior, and any Lua error. Please omit personal account information.
-

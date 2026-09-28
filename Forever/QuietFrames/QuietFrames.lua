@@ -81,16 +81,17 @@ local function CreateSettings()
     title:SetText("QuietFrames")
     local description = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
     description:SetPoint("TOPLEFT", 16, -48)
-    description:SetText("Choose your foreground FPS caps. Enter whole numbers from 1 to 1000.\nClick Save to apply and remember your changes.")
+    description:SetText("QuietFrames adjusts your frame rate to match what you're doing, helping reduce fan noise, heat, and power use without changing your graphics settings. Choose the frame rates that work best for your system below.")
+    description:SetPoint("TOPRIGHT", -16, -48)
     description:SetJustifyH("LEFT")
 
     local rows = {
-        { "afk", "Auto: AFK" },
-        { "fishing", "Auto: Fishing rod equipped" },
-        { "normal", "Auto: Normal / open world" },
-        { "instance", "Auto: Dungeon / raid" },
-        { "quiet", "Quiet mode" },
-        { "full", "Full mode" },
+        { "afk", "AFK", "Lower the frame rate while you're away." },
+        { "fishing", "Fishing", "Keep things cool and quiet while you're fishing." },
+        { "normal", "Open World", "Your everyday frame rate while exploring the world." },
+        { "instance", "Dungeons & Raids", "Allow a higher frame rate when you're in group content." },
+        { "quiet", "Quiet Mode", "Use this frame rate whenever Quiet Mode is selected." },
+        { "full", "Full Mode", "Use this frame rate whenever Full Mode is selected." },
     }
     local inputs = {}
     for index, row in ipairs(rows) do
@@ -102,6 +103,13 @@ local function CreateSettings()
         input:SetPoint("LEFT", panel, "TOPLEFT", 300, -104 - (index - 1) * 42)
         input:SetAutoFocus(false)
         input:SetMaxLetters(4)
+        input:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText(row[2])
+            GameTooltip:AddLine(row[3], 1, 1, 1, true)
+            GameTooltip:Show()
+        end)
+        input:SetScript("OnLeave", function() GameTooltip:Hide() end)
         input:SetScript("OnEscapePressed", function(self)
             self:SetText(tostring(db.fps[row[1]]))
             self:ClearFocus()
@@ -131,7 +139,7 @@ local function CreateSettings()
             input:ClearFocus()
         end
         Apply()
-        feedback:SetText("Saved. " .. Status())
+        feedback:SetText("Your frame rates are saved.")
     end)
     local reset = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     reset:SetSize(150, 26)
@@ -143,7 +151,7 @@ local function CreateSettings()
     end)
     panel:SetScript("OnShow", function()
         for key, input in pairs(inputs) do input:SetText(tostring(db.fps[key])) end
-        feedback:SetText("Auto priority: AFK > Fishing > Location. Quiet and Full override activity.")
+        feedback:SetText("In Auto mode, QuietFrames chooses the right frame rate for what you're doing. AFK takes priority, followed by Fishing, then your current location. Quiet and Full modes will always use the frame rate you've chosen for them.")
     end)
     panel:SetScript("OnHide", function()
         for _, input in pairs(inputs) do input:ClearFocus() end
