@@ -1,5 +1,5 @@
 local addonName = ...
-local defaults = { afk = 30, fishing = 60, normal = 100, instance = 141, quiet = 100, full = 141 }
+local defaults = { afk = 30, fishing = 60, normal = 100, instance = 120, quiet = 90, full = 120 }
 local modeNames = { auto = "Auto", quiet = "Quiet", full = "Full" }
 local nextMode = { auto = "quiet", quiet = "full", full = "auto" }
 -- Forever uses an equipped main-hand fishing pole.
@@ -85,6 +85,27 @@ local function CreateSettings()
     description:SetPoint("TOPRIGHT", -16, -48)
     description:SetJustifyH("LEFT")
 
+    -- Quiet section borders keep automatic values separate from manual overrides.
+    local function CreateGroup(heading, top, height)
+        local group = CreateFrame("Frame", nil, panel, "BackdropTemplate")
+        group:SetPoint("TOPLEFT", 16, top)
+        group:SetPoint("TOPRIGHT", -16, top)
+        group:SetHeight(height)
+        group:SetBackdrop({
+            bgFile = "Interface\\Buttons\\WHITE8X8",
+            edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 12,
+            insets = { left = 3, right = 3, top = 3, bottom = 3 },
+        })
+        group:SetBackdropColor(0, 0, 0, 0.12)
+        group:SetBackdropBorderColor(0.5, 0.5, 0.5, 0.45)
+        local headingText = group:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+        headingText:SetPoint("TOPLEFT", 14, -12)
+        headingText:SetText(heading)
+        return group
+    end
+    local autoGroup = CreateGroup("Auto Mode", -104, 168)
+    local manualGroup = CreateGroup("Manual Overrides", -284, 104)
+
     local rows = {
         { "afk", "AFK", "Lower the frame rate while you're away." },
         { "fishing", "Fishing", "Keep things cool and quiet while you're fishing." },
@@ -95,12 +116,14 @@ local function CreateSettings()
     }
     local inputs = {}
     for index, row in ipairs(rows) do
-        local label = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        label:SetPoint("TOPLEFT", 16, -100 - (index - 1) * 42)
+        local group = index <= 4 and autoGroup or manualGroup
+        local groupIndex = index <= 4 and index or index - 4
+        local label = group:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+        label:SetPoint("TOPLEFT", 14, -42 - (groupIndex - 1) * 30)
         label:SetText(row[2])
-        local input = CreateFrame("EditBox", nil, panel, "InputBoxTemplate")
+        local input = CreateFrame("EditBox", nil, group, "InputBoxTemplate")
         input:SetSize(80, 24)
-        input:SetPoint("LEFT", panel, "TOPLEFT", 300, -104 - (index - 1) * 42)
+        input:SetPoint("LEFT", group, "TOPLEFT", 284, -46 - (groupIndex - 1) * 30)
         input:SetAutoFocus(false)
         input:SetMaxLetters(4)
         input:SetScript("OnEnter", function(self)
@@ -117,13 +140,13 @@ local function CreateSettings()
         inputs[row[1]] = input
     end
     local feedback = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    feedback:SetPoint("TOPLEFT", 16, -412)
+    feedback:SetPoint("TOPLEFT", 16, -446)
     feedback:SetWidth(460)
     feedback:SetJustifyH("LEFT")
 
     local save = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     save:SetSize(120, 26)
-    save:SetPoint("TOPLEFT", 16, -362)
+    save:SetPoint("TOPLEFT", 16, -402)
     save:SetText("Save")
     save:SetScript("OnClick", function()
         -- Validate every field before changing any saved values.
@@ -151,7 +174,7 @@ local function CreateSettings()
     end)
     panel:SetScript("OnShow", function()
         for key, input in pairs(inputs) do input:SetText(tostring(db.fps[key])) end
-        feedback:SetText("In Auto mode, QuietFrames chooses the right frame rate for what you're doing. AFK takes priority, followed by Fishing, then your current location. Quiet and Full modes will always use the frame rate you've chosen for them.")
+        feedback:SetText("In Auto Mode, QuietFrames chooses the appropriate frame rate based on what you're doing. AFK takes priority, then Fishing, followed by your current location. Quiet and Full modes manually override Auto Mode until Auto is selected again.")
     end)
     panel:SetScript("OnHide", function()
         for _, input in pairs(inputs) do input:ClearFocus() end
@@ -233,3 +256,6 @@ events:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 
 events:RegisterEvent("PLAYER_FLAGS_CHANGED") -- Entering or leaving AFK.
+
+
+

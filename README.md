@@ -13,16 +13,16 @@ Both versions have been tried in-game by the author, including the settings menu
 
 ## Default caps
 
-| Rule or mode | FPS |
-| --- | ---: |
-| Auto: AFK | 30 |
-| Auto: Fishing | 60 |
-| Auto: Open World | 100 |
-| Auto: Dungeons & Raids | 141 |
-| Quiet Mode | 100 |
-| Full Mode | 141 |
+| Settings group | Setting | FPS |
+| --- | --- | ---: |
+| Auto Mode | AFK | 30 |
+| Auto Mode | Fishing | 60 |
+| Auto Mode | Open World | 100 |
+| Auto Mode | Dungeons & Raids | 120 |
+| Manual Overrides | Quiet Mode | 90 |
+| Manual Overrides | Full Mode | 120 |
 
-Auto priority is **AFK > Fishing > Location**. Retail scenarios, including Delves, use the dungeon/raid cap (141 FPS by default). Battlegrounds and arenas use the normal cap. Forever scenarios continue to use the normal cap. Leaving AFK or ending fishing restores the appropriate location cap.
+Auto Mode priority is **AFK > Fishing > Location**. Retail scenarios, including Delves, use the dungeon/raid cap (120 FPS by default). Battlegrounds and arenas use the normal cap. Forever scenarios continue to use the normal cap. Leaving AFK or ending fishing restores the appropriate location cap.
 
 Quiet and Full force their configured cap regardless of activity, including AFK, until Auto is selected again. AFK follows WoW's AFK flag (including `/afk`), not a separate inactivity timer.
 
@@ -42,10 +42,10 @@ Do not copy the entire repository into AddOns. For later updates to an existing 
 - **Left-click minimap button:** Auto → Quiet → Full.
 - **Right-click minimap button:** open FPS settings.
 - **Hover:** show mode, detected activity/location, and the current foreground cap.
-- **Settings > AddOns > QuietFrames:** edit all six caps, then click **Save**.
-- **Restore defaults:** fills in the original values; click **Save** to apply.
+- **Settings > AddOns > QuietFrames:** edit the four caps under **Auto Mode** and two under **Manual Overrides**, then click **Save**. Hover over a number field for its description.
+- **Restore defaults:** fills in the shipped defaults above; click **Save** to apply.
 
-Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wide in `QuietFramesDB` for each client. Existing saved values survive updates.
+Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wide in `QuietFramesDB` for each client. New defaults apply to fresh installations and Restore defaults; updates preserve existing valid saved values.
 
 ### Commands
 
@@ -58,9 +58,9 @@ Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wi
 /qf set afk 30
 /qf set fishing 60
 /qf set normal 100
-/qf set instance 141
-/qf set quiet 100
-/qf set full 141
+/qf set instance 120
+/qf set quiet 90
+/qf set full 120
 ```
 
 `/quietframes` is an alias for `/qf`; `/qf config` also opens settings.
@@ -76,3 +76,4 @@ Values must be whole numbers from 1 to 1000. Mode and caps are stored account-wi
 ## Reporting problems
 
 Open an issue with your client/version, current mode, `/qf status` output, expected behavior, and any Lua error. Please omit personal account information.
+
